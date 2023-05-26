@@ -42,6 +42,27 @@ def get_member(member_id):
         "member": member
     }
     return jsonify(response_body), 200
+
+@app.route('/member', methods=['POST'])
+def create_member():
+    
+    body = request.get_json()
+    if request.content_type == 'application/json':
+        if body is None:
+            return jsonify({"message": "El body solicitado se encuentra vacio"}), 400
+        if "first_name" not in body:
+            return jsonify({"message": "Debe especificar first_name"}), 400
+        if "age" not in body:
+            return jsonify({"message": "Debe especificar age"}), 400
+        if "lucky_numbers" not in body:
+            return jsonify({"message": "Debe especificar lucky_numbers"}), 400
+    else:
+        return jsonify({"message": "Error el body debe ser JSON"}), 400
+    try:
+        return jsonify({"message": "Se ha agregado un nuevo member con exito"}), 200
+    except Exception as error:
+        return jsonify({"message": "Ha ocurrido un error inesperado!"}), 500
+
     
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
