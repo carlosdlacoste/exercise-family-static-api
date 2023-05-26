@@ -45,6 +45,8 @@ class FamilyStructure:
 
     def add_member(self, member):
         # fill this method and update the return
+        member['id'] = self._generateId()
+        member['last_name'] = self.last_name
         self._members.append(member)
         return self._members
 
@@ -56,6 +58,7 @@ class FamilyStructure:
             if m['id'] == id:
                 self._members.pop(index)
                 return self._members
+            
 
     def get_member(self, id):
         # fill this method and update the return
@@ -66,3 +69,13 @@ class FamilyStructure:
     # this method is done, it returns a list with all the family members
     def get_all_members(self):
         return self._members
+
+
+# familia = FamilyStructure('CaracasXLI')
+# keiber = {"first_name": "Keiber",
+#           "age": 19,
+#           "lucky_numbers": [7, 9, 6]}
+
+# familia.add_member(keiber)
+
+# print(familia.get_all_members())
