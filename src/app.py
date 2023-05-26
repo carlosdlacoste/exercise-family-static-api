@@ -38,7 +38,7 @@ def handle_hello():
 @app.route('/member/<int:member_id>', methods=['GET'])
 def get_member(member_id):
     member = jackson_family.get_member(member_id)
-    response_body ={
+    response_body = {
         "member": member
     }
     return jsonify(response_body), 200
@@ -59,11 +59,21 @@ def create_member():
     else:
         return jsonify({"message": "Error el body debe ser JSON"}), 400
     try:
+        member = body
+        jackson_family.add_member(member)
         return jsonify({"message": "Se ha agregado un nuevo member con exito"}), 200
     except Exception as error:
         return jsonify({"message": "Ha ocurrido un error inesperado!"}), 500
 
-    
+
+@app.route('/member/<int:member_id>', methods=['DELETE'])
+def remove_member(member_id):
+    jackson_family.delete_member(member_id)
+    response_body = {
+        "done": True
+    }
+    return jsonify(response_body), 200
+
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
